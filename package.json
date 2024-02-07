@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "curtainsjs": "^8.1.5",
-    "gsap": "^3.12.5"
+    "gsap": "^3.12.5",
+    "plyr": "^3.7.8",
+    "split-type": "^0.3.4"
   }
 }
