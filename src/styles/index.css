@@ -48,7 +48,7 @@ body {
 
 .swiper-slide.is-gallery .home_slider-content-wrapper {
   opacity: 0.2;
-  transform: scale(0.92);
+  transform: scale(0.95);
 }
 
 .swiper-slide.is-gallery.swiper-slide-active .home_slider-content-wrapper {

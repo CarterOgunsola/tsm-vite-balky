@@ -49,8 +49,25 @@ function initGallerySlider() {
     loop: true,
     slidesPerView: 1.55,
     centeredSlides: true,
-    speed: 500,
-    grabCursor: true,
+    speed: 600,
+    grabCursor: false,
+    breakpoints: {
+      320: {
+        slidesPerView: 1.2,
+      },
+      480: {
+        slidesPerView: 1.2,
+      },
+      640: {
+        slidesPerView: 1.2,
+      },
+      768: {
+        slidesPerView: 1.2,
+      },
+      1024: {
+        slidesPerView: 1.5,
+      },
+    },
     parallax: true,
     on: {
       init: function () {

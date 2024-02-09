@@ -1,10 +1,13 @@
 import "../styles/index.css";
-import Canvas from "./animations/canvas";
+//import Canvas from "./animations/canvas";
 import setupCurtains from "./animations/canvas";
 import { showBody } from "./animations/starter";
 import { SScroll, handleActiveStateOnLinks } from "./animations/smoothScroll";
 import initGallerySlider from "./animations/workSlider";
 import tsmPlyr from "./utils/plyr";
+import { startClock } from "./utils/clock";
+import { initializeVideoPreviews } from "./animations/workPageVid";
+import { toggleView } from "./animations/workGrid";
 
 showBody();
 
@@ -26,4 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize the custom Plyr setup
   tsmPlyr();
+
+  // Start the clock
+  startClock();
+
+  // Initialize video previews
+  initializeVideoPreviews();
+
+  // Initialize work grid view
+  toggleView();
 });
