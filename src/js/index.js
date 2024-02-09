@@ -8,6 +8,8 @@ import tsmPlyr from "./utils/plyr";
 import { startClock } from "./utils/clock";
 import { initializeVideoPreviews } from "./animations/workPageVid";
 import { toggleView } from "./animations/workGrid";
+import { initializeFilterAnimation } from "./animations/workFilter";
+import { setupFiltering } from "./animations/workFilterList";
 
 showBody();
 
@@ -38,4 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize work grid view
   toggleView();
+
+  //initialize filter
+  initializeFilterAnimation();
+
+  // Initialize filtering
+  setupFiltering();
 });

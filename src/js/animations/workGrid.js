@@ -18,7 +18,7 @@ function toggleView(defaultView = "grid") {
 
   const applyViewChange = (newView) => {
     const elements = document.querySelectorAll(
-      ".work-cms-list, .work-cms-item, .work-cms-num, .work-cms_thumb-main, .work-cms_content, .work-cms-year, .work-cms-line.top, .work-cms-line.btm, .section.cc-work-hero, .work-view_link, .navigation-main, .work-cms_content-btm-list, .work-cms_content-btm-grid",
+      ".work-cms-list, .work-cms-item, .work-cms-num, .work-cms_thumb-main, .work-cms_content, .work-cms-year, .work-cms-line.top, .work-cms-line.btm, .section.cc-work-hero, .work-view_link, .navigation-main, .work-cms_content-btm-list, .work-cms_content-btm-grid, .section.cc-work-hero-top",
     );
     const heroSection = document.querySelector(".section.cc-work-hero"); // Targeting the parent section
 
