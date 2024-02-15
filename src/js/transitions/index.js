@@ -1,2 +1,15 @@
-import barba from "@barba/core";
-import barbaCss from "@barba/css";
+import { homeTransition } from "./homeTransition";
+import { contactTransition } from "./contactTransition";
+import { aboutTransition } from "./aboutTransition";
+import { workCmsTransition } from "./workCmsTransition";
+import { workTransition } from "./workTransition";
+
+const transitions = [
+  homeTransition,
+  workTransition,
+  workCmsTransition,
+  aboutTransition,
+  contactTransition,
+];
+
+export default transitions;
