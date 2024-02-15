@@ -1,0 +1,108 @@
+import "../styles/index.css";
+import barba from "@barba/core";
+import gsap from "gsap";
+import setupCurtains from "./animations/canvas";
+import { showBody } from "./animations/starter";
+import { SScroll, handleActiveStateOnLinks } from "./animations/smoothScroll";
+import initGallerySlider from "./animations/workSlider";
+import tsmPlyr from "./utils/plyr";
+import { startClock } from "./utils/clock";
+import { initializeVideoPreviews } from "./animations/workPageVid";
+import { toggleView } from "./animations/workGrid";
+import { initializeFilterAnimation } from "./animations/workFilter";
+import { setupFiltering } from "./animations/workFilterList";
+
+// Function to reinitialize functionalities
+function reInitComponents() {
+  handleActiveStateOnLinks();
+  initGallerySlider();
+  tsmPlyr();
+  startClock();
+  initializeVideoPreviews();
+  toggleView();
+  initializeFilterAnimation();
+  setupFiltering();
+  setupCurtains(); // Reinitialize curtains or any canvas related animations
+
+  // if (SScroll) {
+  //   SScroll.update(); // Assuming `update` method refreshes the scroll listeners
+  // }
+}
+
+// Function to animate page transitions
+function pageTransition() {
+  barba.init({
+    transitions: [
+      {
+        name: "fade-transition",
+        once(data) {
+          // Initial load animation
+          gsap.from(data.next.container, {
+            opacity: 0,
+            duration: 1,
+            onComplete: reInitComponents, // Reinitialize components after initial animation
+          });
+        },
+        leave(data) {
+          // Animate out the current view
+          return gsap.to(data.current.container, {
+            opacity: 0,
+            duration: 1,
+          });
+        },
+        enter(data) {
+          // Animate in the next view
+          gsap.from(data.next.container, {
+            opacity: 0,
+            duration: 1,
+          });
+        },
+        afterEnter(data) {
+          // Reinitialize components after page transition
+          reInitComponents();
+        },
+      },
+    ],
+    views: [
+      {
+        namespace: "home",
+        beforeEnter({ next }) {
+          // Home-specific JS or GSAP animations
+        },
+      },
+      {
+        namespace: "work",
+        beforeEnter({ next }) {
+          // Work-specific JS or GSAP animations
+        },
+      },
+      // Repeat for other namespaces like 'about', 'contact', etc.
+    ],
+  });
+}
+
+// Call this function to show the body if needed immediately
+showBody();
+
+// Load event listener for window to setup curtains
+window.addEventListener("load", setupCurtains);
+
+// DOM Content Loaded event listener to initialize various components
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize smooth scrolling if applicable
+  if (SScroll && typeof SScroll.start === "function") {
+    SScroll.start();
+  }
+
+  handleActiveStateOnLinks();
+  initGallerySlider();
+  tsmPlyr();
+  startClock();
+  initializeVideoPreviews();
+  toggleView();
+  initializeFilterAnimation();
+  setupFiltering();
+
+  // Initialize page transitions after everything is set up
+  pageTransition();
+});
