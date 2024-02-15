@@ -21,11 +21,6 @@ window.addEventListener("load", setupCurtains);
 
 // Consolidated DOMContentLoaded listener
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize smooth scrolling
-  // if (SScroll && typeof SScroll.start === "function") {
-  //   SScroll.start();
-  // }
-
   // Handle active state on anchor links
   handleActiveStateOnLinks();
 
