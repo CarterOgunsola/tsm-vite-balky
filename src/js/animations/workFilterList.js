@@ -34,9 +34,10 @@ const setupFiltering = () => {
     filterLink.addEventListener("click", function (event) {
       event.preventDefault();
       const filterValue = this.getAttribute("data-filter").trim().toLowerCase();
-
+      const startHeight = gsap.getProperty(container, "height");
+      // console.log("startHeight", startHeight);
       // Capture the state before filtering
-      const state = Flip.getState(items.concat(container));
+      const state = Flip.getState(items);
 
       // Filter and display adjustment
       let visibleItemsCount = 0;
@@ -50,7 +51,6 @@ const setupFiltering = () => {
         item.style.display = isVisible ? "flex" : "none";
         if (isVisible) visibleItemsCount++;
       });
-
       // Update work list number with filtered count
       updateWorkListNumber(visibleItemsCount);
 
@@ -65,23 +65,39 @@ const setupFiltering = () => {
         },
       });
 
+      const endHeight = gsap.getProperty(container, "height");
+      // console.log("endHeight", endHeight);
+
       // Animate layout changes
-      Flip.from(state, {
+      const flip = Flip.from(state, {
         duration: 0.8,
         ease: "power2.inOut",
         stagger: 0.08,
         absolute: true,
-        absoluteOnLeave: true,
+        // absoluteOnLeave: true,
         scale: true,
         onEnter: (elements) =>
           gsap.fromTo(
             elements,
-            { opacity: 0.9 },
-            { opacity: 1, duration: 0.8 },
+            { opacity: 0, scale: 0 },
+            { opacity: 1, scale: 1, duration: 1 },
           ),
         onLeave: (elements) =>
-          gsap.fromTo(elements, { opacity: 1 }, { opacity: 0, duration: 0.8 }),
+          gsap.to(elements, { opacity: 0, scale: 0, duration: 1 }),
       });
+
+      flip.fromTo(
+        container,
+        {
+          height: startHeight,
+        },
+        {
+          height: endHeight,
+          clearProps: "height",
+          duration: flip.duration(),
+        },
+        0,
+      );
     });
   });
 };
