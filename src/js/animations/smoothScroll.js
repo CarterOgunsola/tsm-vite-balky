@@ -1,4 +1,4 @@
-import { SScroll } from "/js/utils/lenis";
+import Lenis from "@studio-freight/lenis";
 
 // Translate the data attributes into a configuration object
 const lenisConfig = {
@@ -28,11 +28,15 @@ const lenisConfig = {
   // data-infinite
 };
 
-//Apply the configuration to the SScroll instance
-// Assuming SScroll has methods or properties to set these configurations
-if (SScroll && typeof SScroll.setOptions === "function") {
-  SScroll.setOptions(lenisConfig);
+// Initialize the Lenis instance
+const lenis = new Lenis(lenisConfig);
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
 }
+
+requestAnimationFrame(raf);
 
 // Function to handle the active state of anchor links
 function handleActiveStateOnLinks() {
@@ -67,4 +71,4 @@ function handleActiveStateOnLinks() {
 }
 
 // Export the SScroll instance for use elsewhere
-export { SScroll, handleActiveStateOnLinks };
+export { lenis, handleActiveStateOnLinks };
