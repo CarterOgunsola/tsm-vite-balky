@@ -48,6 +48,7 @@ function initGallerySlider() {
   const gallerySlider = new Swiper(".swiper.is-gallery", {
     loop: true,
     slidesPerView: 1.55,
+    threshold: 10,
     centeredSlides: true,
     speed: 600,
     grabCursor: false,
@@ -139,5 +140,20 @@ function initGallerySlider() {
 
   return gallerySlider;
 }
+
+export const sliderMouse = () => {
+  const sliderMain = document.querySelector(".home_slider-main");
+  const sliderCursor = document.querySelector(".home_slider-cursor");
+
+  if (sliderMain && sliderCursor) {
+    sliderMain.addEventListener("mouseenter", () => {
+      sliderCursor.style.opacity = 1; // Set opacity to 100% when mouse enters .home_slider-main
+    });
+
+    sliderMain.addEventListener("mouseleave", () => {
+      sliderCursor.style.opacity = 0; // Set opacity to 0 when mouse leaves .home_slider-main
+    });
+  }
+};
 
 export default initGallerySlider;

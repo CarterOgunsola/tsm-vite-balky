@@ -188,3 +188,37 @@ html.lenis {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
+
+[a-line-wrap] {
+  display: inline-flex;
+  align-items: center; /* Center the items vertically */
+  position: relative;
+  cursor: pointer; /* Optional: Change cursor to pointer to indicate hoverable element */
+}
+
+[a-line] {
+  /*color: #ffffff; /* Set the text color */
+  position: relative;
+}
+
+[a-underline] {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* Hide the navigation link dot by default */
+[nav-link-dot] {
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Smooth transition for opacity change */
+}
+
+/* Show the navigation link dot when the parent has the class 'w--current' */
+[nav-link].w--current [nav-link-dot] {
+  opacity: 1;
+}

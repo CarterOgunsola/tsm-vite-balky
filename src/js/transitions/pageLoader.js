@@ -45,7 +45,7 @@ export function pageLoader() {
         scrambleText: {
           text: word,
           chars: "upperCase",
-          speed: 0.8,
+          speed: 0.75,
           revealDelay: 0.1,
           tweenLength: false,
           newClass: "scrambled",
@@ -74,10 +74,10 @@ function exitAnimation() {
     {
       opacity: 0,
       y: 100,
-      duration: 0.5,
+      duration: 1,
       ease: "power3.inOut",
     },
-    "-=0.5",
+    "-=1",
   ); // Overlap with the previous animation
 
   // Animate the height of .page-loader_main to 0
@@ -85,10 +85,10 @@ function exitAnimation() {
     ".page-loader_main",
     {
       height: 0,
-      duration: 1,
-      ease: "power3.inOut",
+      duration: 1.2,
+      ease: "expo.inOut",
     },
-    "-=0.5",
+    "-=0.8",
   ); // Overlap with the previous animation
 
   //hide loader
@@ -98,6 +98,6 @@ function exitAnimation() {
       display: "none",
       duration: 0,
     },
-    "-=0.5",
+    "-=0",
   );
 }
