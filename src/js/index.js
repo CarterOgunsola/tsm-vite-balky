@@ -1,4 +1,5 @@
 import "../styles/index.css";
+import { pageLoader } from "./transitions/pageLoader";
 //import Canvas from "./animations/canvas";
 import setupCurtains from "./animations/canvas";
 // import { showBody } from "./animations/starter";
@@ -13,6 +14,8 @@ import { initializeVideoPreviews } from "./animations/workPageVid";
 import { toggleView } from "./animations/workGrid";
 import { initializeFilterAnimation } from "./animations/workFilter";
 import { setupFiltering } from "./animations/workFilterList";
+import { initializeMarquee } from "./animations/projectMarquee";
+import { generalAnimation } from "./animations/generalAnimation";
 
 // showBody();
 
@@ -24,24 +27,49 @@ document.addEventListener("DOMContentLoaded", () => {
   // Handle active state on anchor links
   handleActiveStateOnLinks();
 
-  // Initialize the gallery slider
-  initGallerySlider();
+  //initialize page loader
+  pageLoader();
 
-  // Initialize the custom Plyr setup
-  tsmPlyr();
+  // Initialize the gallery slider if the element exists
+  if (document.querySelector(".home-page")) {
+    initGallerySlider();
+  }
 
-  // Start the clock
-  startClock();
+  // Initialize the custom Plyr setup if the element exists
+  if (document.querySelector(".plyr_component")) {
+    tsmPlyr();
+  }
 
-  // Initialize video previews
-  initializeVideoPreviews();
+  // Start the clock if the element exists
+  if (document.querySelector(".page-wrapper")) {
+    startClock();
+  }
 
-  // Initialize work grid view
-  toggleView();
+  // Initialize the marquee if the element exists
+  if (document.querySelector(".work-cms-page")) {
+    initializeMarquee();
+  }
 
-  //initialize filter
-  initializeFilterAnimation();
+  // Initialize work grid view if the element exists
+  if (document.querySelector(".work-page")) {
+    toggleView();
+  }
 
-  // Initialize filtering
-  setupFiltering();
+  // Initialize filter if the element exists
+  if (document.querySelector(".work-page")) {
+    initializeFilterAnimation();
+  }
+
+  // Initialize filtering if the element exists
+  if (document.querySelector(".work-page")) {
+    setupFiltering();
+  }
+
+  // Initialize video previews if the element exists
+  if (document.querySelector(".work-page")) {
+    initializeVideoPreviews();
+  }
+
+  // initialize general animation
+  generalAnimation();
 });
