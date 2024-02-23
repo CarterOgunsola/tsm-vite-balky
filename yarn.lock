@@ -214,6 +214,20 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.5.tgz#a6ce3e556e00fd9895dd872dd172ad0d4bd687f4"
   integrity sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==
 
+"@unseenco/e@^2.3.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@unseenco/e/-/e-2.4.0.tgz#28691b9e0c7f66ab2ca9ee11880003c10af500be"
+  integrity sha512-HfvX/GCyKHKo193aULxUKawjFhq+0srB80+o7/DVm2npGHOx9tykPykSDRrR/lhjQYSvgEY/zI9CSd2feD/CMg==
+  dependencies:
+    selector-set "^1.1.5"
+
+"@unseenco/taxi@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@unseenco/taxi/-/taxi-1.5.1.tgz#87b874657564ad9a6ff5df472700eb634a2e0636"
+  integrity sha512-76twO4VMf5NUEcf5aJw0q+7ObRJzO2WmEnMfI8WCx+DUzuuVWtDbA+ouIG/6CmwLYQixsJ9mSUQHcLtWCMiCDg==
+  dependencies:
+    "@unseenco/e" "^2.3.0"
+
 core-js@^3.26.1:
   version "3.35.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.35.1.tgz#9c28f8b7ccee482796f8590cc8d15739eaaf980c"
@@ -349,6 +363,11 @@ rollup@^4.2.0:
     "@rollup/rollup-win32-ia32-msvc" "4.9.6"
     "@rollup/rollup-win32-x64-msvc" "4.9.6"
     fsevents "~2.3.2"
+
+selector-set@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/selector-set/-/selector-set-1.1.5.tgz#60c135aea482b6f46a2d95ad72058927690a8634"
+  integrity sha512-6SQw6yMew5iOZ8/cDHDEnJWRM4ot2mxP6szZyF5ptrBogw4AcS4EXRj/8BUfgAMwVfdL84qpModlBMOl2NVrsQ==
 
 source-map-js@^1.0.2:
   version "1.0.2"

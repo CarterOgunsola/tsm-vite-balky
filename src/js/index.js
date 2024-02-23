@@ -1,4 +1,5 @@
 import "../styles/index.css";
+import { Core } from "@unseenco/taxi";
 import { pageLoader } from "./transitions/pageLoader";
 //import Canvas from "./animations/canvas";
 import setupCurtains from "./animations/canvas";
@@ -16,6 +17,8 @@ import { initializeFilterAnimation } from "./animations/workFilter";
 import { setupFiltering } from "./animations/workFilterList";
 import { initializeMarquee } from "./animations/projectMarquee";
 import { generalAnimation } from "./animations/generalAnimation";
+import DefaultRenderer from "./renderer/DefaultRenderer";
+import DefaultTransition from "./transitions/DefaultTransition";
 
 // showBody();
 
@@ -72,4 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // initialize general animation
   generalAnimation();
+
+  const taxi = new Core({
+    renderers: {
+      default: DefaultRenderer,
+    },
+    transitions: {
+      default: DefaultTransition,
+    },
+  });
 });

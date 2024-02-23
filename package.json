@@ -16,6 +16,7 @@
     "@barba/core": "^2.9.7",
     "@barba/css": "^2.1.15",
     "@studio-freight/lenis": "^1.0.35",
+    "@unseenco/taxi": "^1.5.1",
     "curtainsjs": "^8.1.5",
     "gsap": "^3.12.5",
     "plyr": "^3.7.8",
