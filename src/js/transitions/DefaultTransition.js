@@ -7,6 +7,10 @@ export default class DefaultTransition extends Transition {
 
     gsap.to(from, {
       opacity: 0,
+      scale: 0.95,
+      //y: "-=100vh",
+      duration: 0.45,
+      ease: "sine.inOut",
       onComplete: done,
     });
 
@@ -18,7 +22,9 @@ export default class DefaultTransition extends Transition {
 
     gsap.from(to, {
       y: "100vh",
-      duration: 1,
+      duration: 1.2,
+      opacity: 0,
+      ease: "expo.out",
       onComplete: done,
     });
     // done();
