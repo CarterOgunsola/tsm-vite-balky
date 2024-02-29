@@ -19,6 +19,7 @@ import { initializeMarquee } from "./animations/projectMarquee";
 import { generalAnimation } from "./animations/generalAnimation";
 import DefaultRenderer from "./renderer/DefaultRenderer";
 import DefaultTransition from "./transitions/DefaultTransition";
+import { calculator } from "./utils/price-calc";
 
 // showBody();
 
@@ -49,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Initialize the marquee if the element exists
-  if (document.querySelector(".work-cms-page")) {
+  if (document.querySelector(".work-cms-page, .about-page")) {
     initializeMarquee();
   }
 
@@ -71,6 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize video previews if the element exists
   if (document.querySelector(".work-page")) {
     initializeVideoPreviews();
+  }
+
+  // Initialize price calculator if the element exists
+  if (document.querySelector(".contact-page")) {
+    calculator();
   }
 
   // initialize general animation
