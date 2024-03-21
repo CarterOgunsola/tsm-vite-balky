@@ -104,6 +104,14 @@ body {
   opacity: 100%;
 }
 
+/*.swiper-slide.is-gallery .home_slider-content-img {
+  opacity: 100%;
+}
+
+.swiper-slide.is-gallery.swiper-slide-active .home_slider-content-img {
+  opacity: 0%;
+}*/
+
 .home_slider-cursor-parent {
   pointer-events: none;
   opacity: 0%;

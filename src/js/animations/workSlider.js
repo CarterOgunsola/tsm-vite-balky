@@ -19,28 +19,34 @@ const animationSettings = {
 
 // Animate text out with customized stagger based on whether it's the second data-split
 function animateTextOut(chars, isSecondSplit = false) {
-  gsap.to(chars, {
-    yPercent: animationSettings.yPercent,
-    opacity: 0.4,
-    duration: animationSettings.duration,
-    ease: animationSettings.ease,
-    stagger: isSecondSplit
-      ? animationSettings.staggerSecondSplit
-      : animationSettings.stagger,
-  });
+  if (chars.length > 0) {
+    // Check if chars is not empty
+    gsap.to(Array.from(chars), {
+      yPercent: animationSettings.yPercent,
+      opacity: 0.4,
+      duration: animationSettings.duration,
+      ease: animationSettings.ease,
+      stagger: isSecondSplit
+        ? animationSettings.staggerSecondSplit
+        : animationSettings.stagger,
+    });
+  }
 }
 
 // Animate text in with customized stagger based on whether it's the second data-split
 function animateTextIn(chars, isSecondSplit = false) {
-  gsap.to(chars, {
-    yPercent: 0, // Reset to visible state
-    duration: animationSettings.duration,
-    opacity: 1,
-    ease: animationSettings.ease,
-    stagger: isSecondSplit
-      ? animationSettings.staggerSecondSplit
-      : animationSettings.stagger,
-  });
+  if (chars.length > 0) {
+    // Check if chars is not empty
+    gsap.to(Array.from(chars), {
+      yPercent: 0, // Reset to visible state
+      duration: animationSettings.duration,
+      opacity: 1,
+      ease: animationSettings.ease,
+      stagger: isSecondSplit
+        ? animationSettings.staggerSecondSplit
+        : animationSettings.stagger,
+    });
+  }
 }
 
 // Function to initialize and return the Swiper gallery slider
@@ -72,11 +78,30 @@ function initGallerySlider() {
     parallax: true,
     on: {
       init: function () {
+        // Slide number start
+        this.slides.forEach((slide, index) => {
+          const slideNumber = (index + 1).toString().padStart(2, "0");
+          const paragraph = slide.querySelector("[data-swiper-slide-number]");
+          if (paragraph) {
+            paragraph.textContent = slideNumber;
+          }
+        });
+        // Slide number end
+
         // Pause and initialize all videos
         const videos = document.querySelectorAll(".swiper.is-gallery video");
         videos.forEach((video) => {
           video.pause();
           video.setAttribute("data-current-time", "0");
+
+          // Listen for the 'canplay' event to add the 'is-active' class to the image
+          video.addEventListener("canplay", () => {
+            const slide = video.closest(".swiper-slide");
+            const image = slide.querySelector(".home_slider-content-img");
+            if (slide.classList.contains("swiper-slide-active") && image) {
+              image.classList.add("is-active");
+            }
+          });
         });
 
         // Play video in the initial active slide, if present
@@ -107,16 +132,23 @@ function initGallerySlider() {
         // Handle video play/pause
         const videos = document.querySelectorAll(".swiper.is-gallery video");
         videos.forEach((video) => {
-          video.setAttribute("data-current-time", video.currentTime.toString());
           video.pause();
+          const slide = video.closest(".swiper-slide");
+          const image = slide.querySelector(".home_slider-content-img");
+          if (image) {
+            image.classList.remove("is-active");
+          }
         });
 
         const activeSlide = this.slides[this.activeIndex];
         const video = activeSlide.querySelector("video");
         if (video) {
-          const currentTime = video.getAttribute("data-current-time");
-          video.currentTime = currentTime ? parseFloat(currentTime) : 0;
           video.play();
+          const image = activeSlide.querySelector(".home_slider-content-img");
+          if (video.readyState >= 3 && image) {
+            // readyState 3 means the video has enough data to play
+            image.classList.add("is-active");
+          }
         }
 
         // Animate text for all slides

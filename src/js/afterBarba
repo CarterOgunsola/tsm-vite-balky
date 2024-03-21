@@ -1,9 +1,16 @@
 import "../styles/index.css";
+import { Core } from "@unseenco/taxi";
+import { pageLoader } from "./transitions/pageLoader";
+//import Canvas from "./animations/canvas";
+import setupCurtains from "./animations/canvas";
 import barba from "@barba/core";
 import gsap from "gsap";
-import setupCurtains from "./animations/canvas";
-import { showBody } from "./animations/starter";
-import { SScroll, handleActiveStateOnLinks } from "./animations/smoothScroll";
+
+// import { showBody } from "./animations/starter";
+import {
+  // lenis,
+  handleActiveStateOnLinks,
+} from "./animations/smoothScroll";
 import initGallerySlider from "./animations/workSlider";
 import tsmPlyr from "./utils/plyr";
 import { startClock } from "./utils/clock";
@@ -11,98 +18,118 @@ import { initializeVideoPreviews } from "./animations/workPageVid";
 import { toggleView } from "./animations/workGrid";
 import { initializeFilterAnimation } from "./animations/workFilter";
 import { setupFiltering } from "./animations/workFilterList";
+import { initializeMarquee } from "./animations/projectMarquee";
+import { generalAnimation } from "./animations/generalAnimation";
+import DefaultRenderer from "./renderer/DefaultRenderer";
+import {
+  enterTransition,
+  leaveTransition,
+} from "./transitions/DefaultTransition";
+import { calculator } from "./utils/price-calc";
+import { resetWebflow } from "./utils/resetWefblow";
 
-// Function to reinitialize functionalities
-function reInitComponents() {
+// Initialize curtains setup once the window is fully loaded
+window.addEventListener("load", setupCurtains);
+
+// Consolidated DOMContentLoaded listener
+document.addEventListener("DOMContentLoaded", () => {
   handleActiveStateOnLinks();
-  initGallerySlider();
-  tsmPlyr();
-  startClock();
-  initializeVideoPreviews();
-  toggleView();
-  initializeFilterAnimation();
-  setupFiltering();
-  setupCurtains(); // Reinitialize curtains or any canvas related animations
+  pageLoader();
+  resetWebflow();
 
-  // if (SScroll) {
-  //   SScroll.update(); // Assuming `update` method refreshes the scroll listeners
-  // }
-}
+  initFeature(".home-page", initGallerySlider);
+  initFeature(".plyr_component", tsmPlyr);
+  initFeature(".page-wrapper", startClock);
+  initFeature(".work-cms-page, .about-page", initializeMarquee);
+  initFeature(
+    ".work-page",
+    toggleView,
+    initializeFilterAnimation,
+    setupFiltering,
+    initializeVideoPreviews,
+  );
+  initFeature(".contact-page", calculator);
 
-// Function to animate page transitions
-function pageTransition() {
-  barba.init({
+  generalAnimation();
+
+  const transitions = barba.init({
     transitions: [
       {
-        name: "fade-transition",
-        once(data) {
-          // Initial load animation
-          gsap.from(data.next.container, {
-            opacity: 0,
-            duration: 1,
-            onComplete: reInitComponents, // Reinitialize components after initial animation
-          });
-        },
+        name: "default-transition",
+        sync: true,
         leave(data) {
-          // Animate out the current view
-          return gsap.to(data.current.container, {
-            opacity: 0,
-            duration: 1,
-          });
+          const done = this.async();
+          leaveTransition(data.current.container, done);
         },
         enter(data) {
-          // Animate in the next view
-          gsap.from(data.next.container, {
-            opacity: 0,
-            duration: 1,
+          const done = this.async();
+          enterTransition(data.next.container, done);
+        },
+        beforeEnter(data) {
+          gsap.set(data.next.container, {
+            position: "fixed",
+            width: "100%",
+            height: "100%",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
           });
         },
         afterEnter(data) {
-          // Reinitialize components after page transition
-          reInitComponents();
+          gsap.set(data.next.container, {
+            position: "static",
+            width: "auto",
+            height: "auto",
+            top: "auto",
+            left: "auto",
+            right: "auto",
+            bottom: "auto",
+          });
         },
       },
     ],
-    views: [
-      {
-        namespace: "home",
-        beforeEnter({ next }) {
-          // Home-specific JS or GSAP animations
-        },
-      },
-      {
-        namespace: "work",
-        beforeEnter({ next }) {
-          // Work-specific JS or GSAP animations
-        },
-      },
-      // Repeat for other namespaces like 'about', 'contact', etc.
-    ],
+    debug: true,
   });
+});
+
+barba.hooks.once(() => {
+  pageLoader();
+});
+
+barba.hooks.after(() => {
+  setupCurtains();
+  window.scrollTo(0, 0);
+  reinitializeFeatures();
+  resetWebflow();
+});
+
+barba.hooks.enter(() => {
+  // setupCurtains();
+});
+
+function initFeature(selector, ...functions) {
+  const element = document.querySelector(selector);
+  if (element) {
+    functions.forEach((func) => func());
+  }
 }
 
-// Call this function to show the body if needed immediately
-showBody();
-
-// Load event listener for window to setup curtains
-window.addEventListener("load", setupCurtains);
-
-// DOM Content Loaded event listener to initialize various components
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize smooth scrolling if applicable
-  if (SScroll && typeof SScroll.start === "function") {
-    SScroll.start();
-  }
-
+function reinitializeFeatures() {
   handleActiveStateOnLinks();
-  initGallerySlider();
-  tsmPlyr();
-  startClock();
-  initializeVideoPreviews();
-  toggleView();
-  initializeFilterAnimation();
-  setupFiltering();
-
-  // Initialize page transitions after everything is set up
-  pageTransition();
-});
+  pageLoader();
+  initFeature(".home-page", initGallerySlider);
+  initFeature(".plyr_component", tsmPlyr);
+  initFeature(".page-wrapper", startClock);
+  initFeature(".work-cms-page, .about-page", initializeMarquee);
+  initFeature(
+    ".work-page",
+    toggleView,
+    initializeFilterAnimation,
+    setupFiltering,
+    initializeVideoPreviews,
+  );
+  initFeature(".contact-page", calculator);
+  generalAnimation();
+  console.log("All the scripts are reinitialized");
+}

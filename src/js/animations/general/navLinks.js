@@ -24,35 +24,38 @@ export const initNavLinkHover = () => {
   navLinks.forEach((link) => {
     const dot = link.querySelector("[nav-link-dot]");
 
-    // Observe changes to the 'is-active' and 'w--current' classes
-    const observer = new MutationObserver(() => {
-      // Update the dot's opacity based on the 'is-active' and 'w--current' classes
-      if (
-        link.classList.contains("w--current") ||
-        dot.classList.contains("is-active")
-      ) {
-        dot.style.opacity = "1";
-      } else {
-        dot.style.opacity = "0";
-      }
-    });
+    // Only proceed if both link and dot elements are valid DOM nodes
+    if (link && dot) {
+      // Observe changes to the 'is-active' and 'w--current' classes
+      const observer = new MutationObserver(() => {
+        // Update the dot's opacity based on the 'is-active' and 'w--current' classes
+        if (
+          link.classList.contains("w--current") ||
+          dot.classList.contains("is-active")
+        ) {
+          dot.style.opacity = "1";
+        } else {
+          dot.style.opacity = "0";
+        }
+      });
 
-    observer.observe(link, { attributes: true, attributeFilter: ["class"] });
-    observer.observe(dot, { attributes: true, attributeFilter: ["class"] });
+      observer.observe(link, { attributes: true, attributeFilter: ["class"] });
+      observer.observe(dot, { attributes: true, attributeFilter: ["class"] });
 
-    link.addEventListener("mouseenter", () => {
-      // Flicker the dot on hover
-      flickerDot(dot);
-    });
+      link.addEventListener("mouseenter", () => {
+        // Flicker the dot on hover
+        flickerDot(dot);
+      });
 
-    link.addEventListener("mouseleave", () => {
-      // Hide the dot on hover out, unless the link has 'w--current' or the dot has 'is-active'
-      if (
-        !link.classList.contains("w--current") &&
-        !dot.classList.contains("is-active")
-      ) {
-        dot.style.opacity = "0";
-      }
-    });
+      link.addEventListener("mouseleave", () => {
+        // Hide the dot on hover out, unless the link has 'w--current' or the dot has 'is-active'
+        if (
+          !link.classList.contains("w--current") &&
+          !dot.classList.contains("is-active")
+        ) {
+          dot.style.opacity = "0";
+        }
+      });
+    }
   });
 };

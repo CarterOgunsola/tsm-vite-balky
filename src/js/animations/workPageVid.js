@@ -55,4 +55,34 @@ function initializeVideoPreviews() {
   });
 }
 
-export { initializeVideoPreviews };
+function workCmsVidPlay() {
+  const workItems = document.querySelectorAll(".work-cms-item");
+
+  function canVideoPlay(video) {
+    return video.readyState === 4; // 4 represents 'HAVE_ENOUGH_DATA' state
+  }
+
+  function handleMouseEnter(event) {
+    const currentItem = event.currentTarget;
+    const video = currentItem.querySelector("video");
+    const image = currentItem.querySelector(".work-cms_thumb-img");
+
+    if (video && canVideoPlay(video)) {
+      image.classList.add("is-active");
+    }
+  }
+
+  function handleMouseLeave(event) {
+    const currentItem = event.currentTarget;
+    const image = currentItem.querySelector(".work-cms_thumb-img");
+
+    image.classList.remove("is-active");
+  }
+
+  workItems.forEach((item) => {
+    item.addEventListener("mouseenter", handleMouseEnter);
+    item.addEventListener("mouseleave", handleMouseLeave);
+  });
+}
+
+export { initializeVideoPreviews, workCmsVidPlay };
