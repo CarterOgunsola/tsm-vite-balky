@@ -23,3 +23,5 @@ node_modules
 .github
 .devcontainer
 .codesandbox
+
+dist/
